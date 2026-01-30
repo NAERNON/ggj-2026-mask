@@ -5,6 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
 size = Vector2(1152, 27)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o5qli"]
+
 [node name="Main" type="Node2D" unique_id=714016782]
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
@@ -15,7 +17,24 @@ deceleration_scale = 50.0
 jump_speed = 500.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1731318811]
+position = Vector2(576, 650)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1645058030]
-position = Vector2(576, 634.5)
 shape = SubResource("RectangleShape2D_o5qli")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=417878601]
+position = Vector2(-1.5258789e-05, 0)
+scale = Vector2(1152, 27)
+texture = SubResource("PlaceholderTexture2D_o5qli")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=712307921]
+position = Vector2(850, 550)
+scale = Vector2(0.1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1030156514]
+shape = SubResource("RectangleShape2D_o5qli")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=578743585]
+position = Vector2(-1.5258789e-05, 0)
+scale = Vector2(1152, 27)
+texture = SubResource("PlaceholderTexture2D_o5qli")
