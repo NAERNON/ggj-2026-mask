@@ -15,9 +15,12 @@ scale = Vector2(0.1, 0.1)
 roll_acceleration = 500.0
 deceleration_scale = 50.0
 jump_speed = 500.0
+reroll_speed = 700.0
+espilon_ungrip = 0.5
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1731318811]
 position = Vector2(576, 650)
+scale = Vector2(10, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1645058030]
 shape = SubResource("RectangleShape2D_o5qli")
@@ -29,7 +32,7 @@ texture = SubResource("PlaceholderTexture2D_o5qli")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=712307921]
 position = Vector2(850, 550)
-scale = Vector2(0.1, 1)
+scale = Vector2(0.15, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1030156514]
 shape = SubResource("RectangleShape2D_o5qli")
