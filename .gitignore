@@ -1,0 +1,11 @@
+# Godot 4+ specific ignores
+.godot/
+
+*.tmp
+
+# macOS
+.DS_Store
+
+### Xcode ###
+## User settings
+xcuserdata/
