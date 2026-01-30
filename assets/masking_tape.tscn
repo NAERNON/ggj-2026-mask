@@ -19,7 +19,9 @@ animations = [{
 
 [node name="MaskingTape" type="CharacterBody2D" unique_id=311947507]
 script = ExtResource("1_no3c2")
-gravity = 100.0
+gravity = 400.0
+roll_speed = 300.0
+jump_speed = 600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=932109046]
 shape = SubResource("CircleShape2D_no3c2")

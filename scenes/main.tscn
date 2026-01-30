@@ -10,6 +10,9 @@ size = Vector2(1152, 27)
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
 position = Vector2(100, 100)
 scale = Vector2(0.1, 0.1)
+roll_acceleration = 500.0
+deceleration_scale = 50.0
+jump_speed = 500.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1731318811]
 
