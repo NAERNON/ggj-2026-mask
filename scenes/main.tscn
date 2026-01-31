@@ -31,13 +31,20 @@ size = Vector2(40, 40)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tipki"]
 size = Vector2(40, 40)
 
-[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_tbgi4"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jyhfs"]
+size = Vector2(20, 20)
+
+[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock")]
 script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
 epsilon_corner = 2.5
-rubber_width = 1.0
+rubber_width = 0.3
 platforms = NodePath("Platforms")
+restock = NodePath("Restock")
+restock_value = 300.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=323147266]
 texture = ExtResource("2_sugp2")
@@ -46,6 +53,8 @@ offset = Vector2(480, 270)
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
 position = Vector2(77, 510)
 scale = Vector2(0.03, 0.03)
+collision_layer = 0
+collision_mask = 15
 initial_tape_dist = 500.0
 roll_acceleration = 450.0
 deceleration_scale = 10.0
@@ -150,7 +159,18 @@ texture = SubResource("PlaceholderTexture2D_tipki")
 position = Vector2(437, 367)
 texture = ExtResource("4_jyhfs")
 
+[node name="Restock" type="StaticBody2D" parent="." unique_id=312312138]
+position = Vector2(11, 146)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Restock" unique_id=263989171]
+shape = SubResource("CircleShape2D_tbgi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Restock" unique_id=1147071703]
+texture = SubResource("PlaceholderTexture2D_jyhfs")
+
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
 [connection signal="start_grip" from="MaskingTape" to="." method="_on_masking_tape_start_grip"]
 [connection signal="touch_or_leave_floor" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_floor"]
+[connection signal="touch_restock" from="MaskingTape" to="." method="_on_masking_tape_touch_restock"]

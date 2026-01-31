@@ -7,6 +7,8 @@ extends Node2D
 @export_range(0.0, 5.0, 0.1) var rubber_width : float
 
 @export var platforms : Node
+@export var restock   : StaticBody2D
+@export_range(0.0, 1000.0, 10.0) var restock_value : float
 
 var _masking_tapes : Array[Line2D]
 
@@ -146,3 +148,7 @@ func _on_masking_tape_reroll() -> void:
 			masking_tape.is_gripping = false
 		else :
 			masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-2) - masking_tape.contact_floor.position * masking_tape.scale
+
+func _on_masking_tape_touch_restock() -> void:
+	self.remove_child(restock)
+	masking_tape.add_max_tape(restock_value)
