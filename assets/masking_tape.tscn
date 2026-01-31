@@ -17,17 +17,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MaskingTape" type="CharacterBody2D" unique_id=311947507 node_paths=PackedStringArray("_masking_rubber")]
+[node name="MaskingTape" type="CharacterBody2D" unique_id=311947507]
 script = ExtResource("1_no3c2")
 jump_speed = 600.0
-_masking_rubber = NodePath("MaskingRubber")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=932109046]
 shape = SubResource("CircleShape2D_no3c2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1791920993]
 sprite_frames = SubResource("SpriteFrames_ikd68")
-
-[node name="MaskingRubber" type="Line2D" parent="." unique_id=1171544675]
-top_level = true
-width = 20.0
