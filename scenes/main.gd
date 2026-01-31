@@ -76,6 +76,7 @@ func get_param_d(p1 : Vector2, p2 : Vector2) -> Vector3 :
 		return param_d
 
 func add_tape_point(pos : Vector2, index : int = -1) -> void :
+	print(pos)
 	_current_tape.add_point(pos, index)
 	_nb_current_tape_points += 1
 
@@ -137,7 +138,7 @@ func _on_masking_tape_start_grip() -> void:
 func _on_masking_tape_touch_or_leave_floor() -> void:
 	if _current_tape :
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
-		add_tape_point(masking_tape.contact_floor.global_position)
+		add_tape_point(masking_tape.contact_floor.global_position if masking_tape.is_on_floor() else masking_tape.last_floor_position)
 
 func _on_masking_tape_reroll() -> void:
 	if masking_tape.position.distance_to(masking_tape.reroll_target) < epsilon_tape :
