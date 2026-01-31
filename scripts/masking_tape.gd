@@ -6,6 +6,7 @@ class_name MaskingTape extends CharacterBody2D
 @export_range(0.0, 1000.0, 10.0) var jump_speed         : float
 @export_range(0.0, 1000.0, 10.0) var reroll_speed       : float
 @export_range(0.0, 1000.0, 10.0) var wall_roll_speed    : float
+@export_range(0.0, 1000.0, 10.0) var push_force         : float
 
 @export var contact_floor : Node2D
 var reroll_target     : Vector2
@@ -68,6 +69,11 @@ func _physics_process(delta : float) -> void :
 			_grip_on_wall = false
 
 		move_and_slide()
+		for collision_id : int in range(get_slide_collision_count()) :
+			var collision : KinematicCollision2D = get_slide_collision(collision_id)
+			if collision.get_collider() is RigidBody2D :
+				var box : RigidBody2D = collision.get_collider()
+				box.apply_force(collision.get_normal() * -push_force)
 	else :
 		if reroll_target != Vector2.INF :
 			self.position = self.position.move_toward(reroll_target, reroll_speed*delta)

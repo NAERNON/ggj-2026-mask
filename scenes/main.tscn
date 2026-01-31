@@ -23,6 +23,12 @@ size = Vector2(20, 600)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
 size = Vector2(20, 600)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
+size = Vector2(40, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tipki"]
+size = Vector2(40, 40)
+
 [node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms")]
 script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
@@ -32,7 +38,7 @@ rubber_width = 1.0
 platforms = NodePath("Platforms")
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
-position = Vector2(67, 507)
+position = Vector2(77, 510)
 scale = Vector2(0.03, 0.03)
 initial_tape_dist = 500.0
 roll_acceleration = 600.0
@@ -40,6 +46,7 @@ deceleration_scale = 10.0
 jump_speed = 350.0
 reroll_speed = 500.0
 wall_roll_speed = 200.0
+push_force = 10.0
 
 [node name="MaskingTapes" type="Node" parent="." unique_id=589121195]
 
@@ -122,6 +129,16 @@ shape = SubResource("RectangleShape2D_tbgi4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight" unique_id=920841852]
 position = Vector2(971, 285)
 shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="Box" type="RigidBody2D" parent="." unique_id=962226803]
+position = Vector2(215, 120)
+mass = 0.001
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=576251938]
+shape = SubResource("RectangleShape2D_o6xl0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Box" unique_id=1141377628]
+texture = SubResource("PlaceholderTexture2D_tipki")
 
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
