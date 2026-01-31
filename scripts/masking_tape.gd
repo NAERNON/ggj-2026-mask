@@ -4,9 +4,17 @@ class_name MaskingTape extends CharacterBody2D
 @export_range(0.0, 100.0, 1.0)   var deceleration_scale : float
 @export_range(0.0, 1000.0, 10.0) var jump_speed         : float
 @export_range(0.0, 1000.0, 10.0) var reroll_speed       : float
+@export_range(0.0, 1000.0, 10.0) var wall_roll_speed    : float
 
 @export var contact_floor : Node2D
 var reroll_target     : Vector2
+
+var _grip_on_wall : bool :
+	set(new_value) :
+		_grip_on_wall = new_value
+		floor_stop_on_slope = not floor_stop_on_slope
+		if _grip_on_wall :
+			velocity = Vector2.ZERO
 
 signal start_grip()
 signal end_grip()
@@ -27,28 +35,37 @@ var is_gripping  : bool :
 			start_grip.emit()
 		else :
 			end_grip.emit()
+			_grip_on_wall = false
 
 func _ready() -> void :
 	_in_free_fall = not is_on_floor()
 	_is_rerolling = Input.is_action_just_pressed('move_tape_reroll')
+	_grip_on_wall = false
 
 func _physics_process(delta : float) -> void :
-	velocity.y += 980 * delta
 	get_input(delta)
 
 	if not _is_rerolling :
-		move_and_slide()
+		if not _grip_on_wall :
+			velocity.y += 980 * delta
 
-		if _in_free_fall and is_on_floor() :
-			_in_free_fall = false
-		elif not is_on_floor() and not _in_free_fall :
-			_in_free_fall = true
-	
+			if _in_free_fall and is_on_floor() :
+				_in_free_fall = false
+			elif not is_on_floor() and not _in_free_fall :
+				_in_free_fall = true
+
+			if is_on_wall() and is_gripping :
+				if not _grip_on_wall :
+					_grip_on_wall = true
+		
+		elif _grip_on_wall and not is_on_wall() :
+			_grip_on_wall = false
+
+		move_and_slide()
 	else :
 		if reroll_target != Vector2.INF :
 			self.position = self.position.move_toward(reroll_target, reroll_speed*delta)
 			reroll.emit()
-		
 
 func get_input(delta : float) -> void :
 	_is_rerolling = Input.is_action_pressed('move_tape_reroll') and is_gripping
@@ -57,16 +74,27 @@ func get_input(delta : float) -> void :
 		velocity = Vector2.ZERO
 		return
 	
-	var right  = Input.is_action_pressed('move_tape_right')
-	var left   = Input.is_action_pressed('move_tape_left')
-	var jump   = Input.is_action_just_pressed('move_tape_jump')
-	var grip   = Input.is_action_just_pressed('tape_switch_grip')
-
+	var jump  = Input.is_action_just_pressed('move_tape_jump')
+	var grip  = Input.is_action_just_pressed('tape_switch_grip')
+	
 	if grip :
 		is_gripping = not is_gripping
 
-	var moving = right or left
+	if _grip_on_wall :
+		velocity = Vector2.ZERO
+		var up = Input.is_action_pressed("move_tape_up")
+		var down = Input.is_action_pressed("move_tape_down")
 
+		if up :
+			velocity.y = -wall_roll_speed
+		elif down :
+			velocity.y = wall_roll_speed
+		return
+
+	var right = Input.is_action_pressed('move_tape_right')
+	var left  = Input.is_action_pressed('move_tape_left')
+
+	var moving : bool = right or left
 	if is_on_floor() and jump :
 		velocity.y = -jump_speed
 
