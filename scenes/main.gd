@@ -12,6 +12,7 @@ var _masking_tapes : Array[Line2D]
 
 var _current_tape : Line2D
 var _nb_current_tape_points : int
+var _current_tape_len : float
 
 var _platform_corners : Array[Vector2]
 
@@ -30,11 +31,13 @@ func _ready() -> void :
 		_platform_corners.append(center + Vector2(size.x, -size.y))
 		_platform_corners.append(center + Vector2(-size.x, -size.y))
 
+		_current_tape_len = 0.0
+
 func _physics_process(_delta : float) -> void :
 	if _current_tape :
 		_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
 		
-		if _nb_current_tape_points > 2 :
+		if _nb_current_tape_points > 1 :
 			var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
 			var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-1)
 
@@ -53,6 +56,13 @@ func _physics_process(_delta : float) -> void :
 
 				if dist < epsilon_corner and p_p1 < p1_p2 and p_p2 < p1_p2 :
 					add_tape_point(corner, _nb_current_tape_points-1)
+					p1 = _current_tape.get_point_position(_nb_current_tape_points-2)
+					p2 = _current_tape.get_point_position(_nb_current_tape_points-1)
+		
+			masking_tape.update_used_tape_len(_current_tape_len + p1.distance_to(p2))
+
+		else :
+			masking_tape.update_used_tape_len(0)
 
 func get_param_d(p1 : Vector2, p2 : Vector2) -> Vector3 :
 		var param_d : Vector3
@@ -70,6 +80,7 @@ func add_tape_point(pos : Vector2, index : int = -1) -> void :
 	if _nb_current_tape_points > 2 :
 		var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
 		var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
+		_current_tape_len += p1.distance_to(p2)
 		var center = (p1 + p2) / 2
 		var angle : float = p1.angle_to_point(p2)
 		var size : float = p1.distance_to(p2)
@@ -88,6 +99,11 @@ func add_tape_point(pos : Vector2, index : int = -1) -> void :
 		_current_tape.add_child(body)
 
 func remove_tape_point() -> void :
+	if _nb_current_tape_points > 2 :
+		var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
+		var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
+		_current_tape_len -= p1.distance_to(p2)
+
 	_current_tape.remove_point(_nb_current_tape_points-2)
 	_nb_current_tape_points -= 1
 

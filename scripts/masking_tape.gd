@@ -1,5 +1,6 @@
 class_name MaskingTape extends CharacterBody2D
 
+@export_range(0.0, 1000.0, 10.0) var initial_tape_dist  : float
 @export_range(0.0, 1000.0, 10.0) var roll_acceleration  : float
 @export_range(0.0, 100.0, 1.0)   var deceleration_scale : float
 @export_range(0.0, 1000.0, 10.0) var jump_speed         : float
@@ -8,6 +9,9 @@ class_name MaskingTape extends CharacterBody2D
 
 @export var contact_floor : Node2D
 var reroll_target     : Vector2
+
+var _tape_len      : float
+var _used_tape_len : float
 
 var _grip_on_wall : bool :
 	set(new_value) :
@@ -37,10 +41,12 @@ var is_gripping  : bool :
 			end_grip.emit()
 			_grip_on_wall = false
 
+
 func _ready() -> void :
 	_in_free_fall = not is_on_floor()
 	_is_rerolling = Input.is_action_just_pressed('move_tape_reroll')
 	_grip_on_wall = false
+	_tape_len     = initial_tape_dist
 
 func _physics_process(delta : float) -> void :
 	get_input(delta)
@@ -89,6 +95,9 @@ func get_input(delta : float) -> void :
 			velocity.y = -wall_roll_speed
 		elif down :
 			velocity.y = wall_roll_speed
+
+		if _used_tape_len >= _tape_len :
+			velocity = Vector2.ZERO
 		return
 
 	var right = Input.is_action_pressed('move_tape_right')
@@ -106,3 +115,12 @@ func get_input(delta : float) -> void :
 			velocity.x += roll_acceleration * delta
 		if left:
 			velocity.x -= roll_acceleration * delta
+	
+	if is_gripping and _used_tape_len >= _tape_len :
+		velocity = Vector2.ZERO
+
+func update_used_tape_len(used_tape : float) -> void :
+	_used_tape_len = used_tape
+	if is_gripping and _used_tape_len >= _tape_len :
+		velocity = Vector2.ZERO
+	print(_used_tape_len)

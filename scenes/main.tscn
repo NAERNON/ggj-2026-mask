@@ -34,6 +34,7 @@ platforms = NodePath("Platforms")
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
 position = Vector2(67, 507)
 scale = Vector2(0.03, 0.03)
+initial_tape_dist = 500.0
 roll_acceleration = 600.0
 deceleration_scale = 10.0
 jump_speed = 350.0
