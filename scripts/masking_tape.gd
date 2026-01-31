@@ -117,10 +117,10 @@ func get_input(delta : float) -> void :
 			velocity.x -= roll_acceleration * delta
 	
 	if is_gripping and _used_tape_len >= _tape_len :
-		velocity = Vector2.ZERO
+		velocity.x = 0.0
+		if velocity.y < 0.0 :
+			velocity.y = 0.0
 
 func update_used_tape_len(used_tape : float) -> void :
 	_used_tape_len = used_tape
-	if is_gripping and _used_tape_len >= _tape_len :
-		velocity = Vector2.ZERO
 	print(_used_tape_len)
