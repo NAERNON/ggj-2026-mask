@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dy78nvx7md1h5" path="res://scenes/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://ba5ixoxqnb3gk" path="res://assets/masking_tape.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://cj1mrtn34jdjd" path="res://aseprite/house/background.tres" id="2_sugp2"]
+[ext_resource type="Texture2D" uid="uid://i2k4p6ekqwfd" path="res://aseprite/house/light.png" id="4_jyhfs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 size = Vector2(250, 285)
@@ -36,6 +38,10 @@ epsilon_tape = 1.0
 epsilon_corner = 2.5
 rubber_width = 1.0
 platforms = NodePath("Platforms")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=323147266]
+texture = ExtResource("2_sugp2")
+offset = Vector2(480, 270)
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
 position = Vector2(77, 510)
@@ -139,6 +145,10 @@ shape = SubResource("RectangleShape2D_o6xl0")
 
 [node name="Sprite2D" type="Sprite2D" parent="Box" unique_id=1141377628]
 texture = SubResource("PlaceholderTexture2D_tipki")
+
+[node name="PlayerLight" type="PointLight2D" parent="." unique_id=86818424]
+position = Vector2(437, 367)
+texture = ExtResource("4_jyhfs")
 
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]

@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" format=3 uid="uid://cj1mrtn34jdjd"]
+
+[ext_resource type="Texture2D" uid="uid://dkba5r2jqjmhf" path="res://aseprite/house/background.png" id="1_ursfv"]
+[ext_resource type="Texture2D" uid="uid://bknhpnqlglo7n" path="res://aseprite/house/background_normals.png" id="2_7iya4"]
+
+[resource]
+diffuse_texture = ExtResource("1_ursfv")
+normal_texture = ExtResource("2_7iya4")
