@@ -66,9 +66,16 @@ func _physics_process(delta : float) -> void :
 			if is_on_wall() and is_gripping :
 				if not _grip_on_wall :
 					_grip_on_wall = true
+					if get_wall_normal().x == 1 :
+						contact_floor.position.x = -contact_floor.position.y
+					else :
+						contact_floor.position.x = contact_floor.position.y
+					contact_floor.position.y = 0
 		
 		elif _grip_on_wall and not is_on_wall() :
 			_grip_on_wall = false
+			contact_floor.position.y = abs(contact_floor.position.x)
+			contact_floor.position.x = 0
 
 		move_and_slide()
 		for collision_id : int in range(get_slide_collision_count()) :
@@ -131,4 +138,3 @@ func get_input(delta : float) -> void :
 
 func update_used_tape_len(used_tape : float) -> void :
 	_used_tape_len = used_tape
-	print(_used_tape_len)
