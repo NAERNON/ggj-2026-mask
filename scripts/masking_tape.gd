@@ -5,7 +5,8 @@ class_name MaskingTape extends CharacterBody2D
 @export_range(0.0, 1000.0, 10.0) var jump_speed         : float
 @export_range(0.0, 1000.0, 10.0) var reroll_speed       : float
 
-var reroll_target : Vector2
+@export var contact_floor : Node2D
+var reroll_target     : Vector2
 
 signal start_grip()
 signal end_grip()

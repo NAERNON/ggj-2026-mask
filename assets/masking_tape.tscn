@@ -17,12 +17,19 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MaskingTape" type="CharacterBody2D" unique_id=311947507]
+[node name="MaskingTape" type="CharacterBody2D" unique_id=311947507 node_paths=PackedStringArray("contact_floor")]
+floor_stop_on_slope = false
+floor_snap_length = 10.0
+safe_margin = 1.0
 script = ExtResource("1_no3c2")
 jump_speed = 600.0
+contact_floor = NodePath("Node2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=932109046]
 shape = SubResource("CircleShape2D_no3c2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1791920993]
 sprite_frames = SubResource("SpriteFrames_ikd68")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=33840583]
+position = Vector2(0, 504)

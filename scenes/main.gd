@@ -2,7 +2,9 @@ extends Node2D
 
 @export var masking_tape : MaskingTape
 @export_range(0.0, 1.0, 0.01) var epsilon_tape : float
-@export_range(0.0, 5.0, 0.01) var epsilon_corner : float
+@export_range(1.0, 5.0, 0.01) var epsilon_corner : float
+
+@export_range(0.0, 5.0, 0.1) var rubber_width : float
 
 @export var platforms : Node
 
@@ -10,7 +12,6 @@ var _masking_tapes : Array[Line2D]
 
 var _current_tape : Line2D
 var _nb_current_tape_points : int
-var _current_param_dor : Vector3
 
 var _platform_corners : Array[Vector2]
 
@@ -31,7 +32,7 @@ func _ready() -> void :
 
 func _physics_process(_delta : float) -> void :
 	if _current_tape :
-		_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.position)
+		_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
 		
 		if _nb_current_tape_points > 2 :
 			var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
@@ -51,8 +52,7 @@ func _physics_process(_delta : float) -> void :
 				var p_p2  = p_on_d.distance_to(p2)
 
 				if dist < epsilon_corner and p_p1 < p1_p2 and p_p2 < p1_p2 :
-					_current_tape.add_point(corner, _nb_current_tape_points-1)
-					_nb_current_tape_points += 1
+					add_tape_point(corner, _nb_current_tape_points-1)
 
 func get_param_d(p1 : Vector2, p2 : Vector2) -> Vector3 :
 		var param_d : Vector3
@@ -62,6 +62,38 @@ func get_param_d(p1 : Vector2, p2 : Vector2) -> Vector3 :
 		param_d.z = -param_d.x * p1.x - param_d.y * p1.y
 
 		return param_d
+
+func add_tape_point(pos : Vector2, index : int = -1) -> void :
+	_current_tape.add_point(pos, index)
+	_nb_current_tape_points += 1
+
+	if _nb_current_tape_points > 2 :
+		var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
+		var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
+		var center = (p1 + p2) / 2
+		var angle : float = p1.angle_to_point(p2)
+		var size : float = p1.distance_to(p2)
+
+		var rectangle : RectangleShape2D = RectangleShape2D.new()
+		rectangle.size = Vector2(size, rubber_width)
+
+		var collision : CollisionShape2D = CollisionShape2D.new()
+		collision.shape = rectangle
+
+		var body : StaticBody2D = StaticBody2D.new()
+		body.rotation = angle
+		body.position = center
+		body.add_child(collision)
+
+		_current_tape.add_child(body)
+
+func remove_tape_point() -> void :
+	_current_tape.remove_point(_nb_current_tape_points-2)
+	_nb_current_tape_points -= 1
+
+	if _nb_current_tape_points > 1 :
+		var body : Node = _current_tape.get_child(-1)
+		_current_tape.remove_child(body)
 
 func _on_masking_tape_end_grip() -> void:
 	if _current_tape :
@@ -75,27 +107,23 @@ func _on_masking_tape_start_grip() -> void:
 	_nb_current_tape_points = 0
 	masking_tape.reroll_target = Vector2.INF
 
-	_current_tape.add_point(masking_tape.position)
-	_nb_current_tape_points += 1
+	add_tape_point(masking_tape.contact_floor.global_position)
 
 	if masking_tape.is_on_wall() or masking_tape.is_on_floor() :
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
-		_current_tape.add_point(masking_tape.position)
-		_nb_current_tape_points += 1
+		add_tape_point(masking_tape.contact_floor.global_position)
 
 func _on_masking_tape_touch_or_leave_floor() -> void:
 	if _current_tape :
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
-		_current_tape.add_point(masking_tape.position)
-		_nb_current_tape_points += 1
+		add_tape_point(masking_tape.contact_floor.global_position)
 
 func _on_masking_tape_reroll() -> void:
 	if masking_tape.position.distance_to(masking_tape.reroll_target) < epsilon_tape :
-		_current_tape.remove_point(_nb_current_tape_points-2)
-		_nb_current_tape_points -= 1
+		remove_tape_point()
 
 		if _nb_current_tape_points < 2 :
 			masking_tape.reroll_target = Vector2.INF
 			masking_tape.is_gripping = false
 		else :
-			masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-2)
+			masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-2) - masking_tape.contact_floor.position * masking_tape.scale
