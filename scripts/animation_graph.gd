@@ -28,6 +28,12 @@ func _on_animation_finished() -> void:
 	if _current_transi == null: return
 	
 	if _current_transi.start_type == AnimationGraphTransition.StartType.ON_ANIMATION_END:
+		_start_timer_for_current_transi()
+
+func _start_timer_for_current_transi() -> void:
+	if _current_transi.delay == 0.0:
+		set_state(_current_transi.destination_state)
+	else:
 		_timer.wait_time = _current_transi.delay
 		_timer.start()
 
@@ -39,5 +45,4 @@ func set_state(state: int) -> void:
 	var transi: AnimationGraphTransition = transition_after_state(state)
 	_current_transi = transi
 	if transi != null and transi.start_type == AnimationGraphTransition.StartType.ON_ANIMATION_START:
-		_timer.wait_time = transi.delay
-		_timer.start()
+		_start_timer_for_current_transi()
