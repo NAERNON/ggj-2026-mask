@@ -78,6 +78,7 @@ func add_tape_point(pos : Vector2, index : int = -1) -> void :
 	_nb_current_tape_points += 1
 
 	if _nb_current_tape_points > 2 :
+		masking_tape.one_grip_point = true
 		var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
 		var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
 		_current_tape_len += p1.distance_to(p2)
@@ -110,6 +111,8 @@ func remove_tape_point() -> void :
 	if _nb_current_tape_points > 1 :
 		var body : Node = _current_tape.get_child(-1)
 		_current_tape.remove_child(body)
+	else :
+		masking_tape.one_grip_point = false
 
 func _on_masking_tape_end_grip() -> void:
 	if _current_tape :

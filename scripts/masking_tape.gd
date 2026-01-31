@@ -41,7 +41,9 @@ var is_gripping  : bool :
 		else :
 			end_grip.emit()
 			_grip_on_wall = false
+			one_grip_point = false
 
+var one_grip_point : bool
 
 func _ready() -> void :
 	_in_free_fall = not is_on_floor()
@@ -102,7 +104,7 @@ func get_input(delta : float) -> void :
 		elif down :
 			velocity.y = wall_roll_speed
 
-		if _used_tape_len >= _tape_len :
+		if _used_tape_len >= _tape_len and one_grip_point :
 			velocity = Vector2.ZERO
 		return
 
@@ -122,7 +124,7 @@ func get_input(delta : float) -> void :
 		if left:
 			velocity.x -= roll_acceleration * delta
 	
-	if is_gripping and _used_tape_len >= _tape_len :
+	if is_gripping and _used_tape_len >= _tape_len and one_grip_point :
 		velocity.x = 0.0
 		if velocity.y < 0.0 :
 			velocity.y = 0.0
