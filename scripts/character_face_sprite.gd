@@ -8,6 +8,10 @@ enum State {
 	SLEEP_START,
 	SLEEP_001,
 	SLEEP_002,
+	RUN_SLOW_LEFT,
+	RUN_SLOW_RIGHT,
+	RUN_FAST_LEFT,
+	RUN_FAST_RIGHT,
 }
 
 func _ready() -> void:
@@ -31,6 +35,10 @@ func animation_to_play_for_state(state: int) -> String:
 		State.SLEEP_START: return "sleep_start"
 		State.SLEEP_001: return "sleep001"
 		State.SLEEP_002: return "sleep002"
+		State.RUN_SLOW_LEFT: return "run_slow_left"
+		State.RUN_SLOW_RIGHT: return "run_slow_right"
+		State.RUN_FAST_LEFT: return "run_fast_left"
+		State.RUN_FAST_RIGHT: return "run_fast_right"
 	return String()
 
 func transition_after_state(state: int) -> AnimationGraphTransition:
@@ -51,7 +59,6 @@ func transition_after_state(state: int) -> AnimationGraphTransition:
 				3.0,
 				AnimationGraphTransition.StartType.ON_ANIMATION_START
 			)
-		State.SLEEP_002: return null
 	return null
 
 func set_state(state: int) -> void:
