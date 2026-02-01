@@ -224,6 +224,6 @@ func _on_masking_tape_touch_frame() -> void:
 func _on_start_menu_start_game() -> void :
 	start_menu.visible = false
 	menu_music.stop()
-	main_music.start()
+	main_music.play()
 	masking_tape.process_mode = Node.PROCESS_MODE_INHERIT
 	
