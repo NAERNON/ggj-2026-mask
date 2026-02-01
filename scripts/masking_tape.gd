@@ -70,7 +70,7 @@ func _ready() -> void :
 	_tape_len     = initial_tape_dist
 	wheel.max_weight = _tape_len / 100.0
 	_circle = collision.shape
-	_circle.radius = 16 + wheel.max_weight
+	_circle.radius = 16 + wheel.max_weight - 2
 
 func _physics_process(delta : float) -> void :
 	get_input(delta)
@@ -184,18 +184,11 @@ func get_input(delta : float) -> void :
 func update_used_tape_len(used_tape : float) -> void :
 	_used_tape_len = used_tape
 	wheel.fill_ratio = 1.0 - (_used_tape_len / _tape_len)
-	_circle.radius = 16 + wheel.max_weight * wheel.fill_ratio
-	if abs(contact_floor.position.x) > 0 :
-		contact_floor.position.y = 0
-		contact_floor.position.x = sign(contact_floor.position.x) * _circle.radius
-	else :
-		contact_floor.position.y = _circle.radius
-		contact_floor.position.x = 0
 
 func add_max_tape(tape_restock : float) -> void :
 	_tape_len += tape_restock
 	wheel.max_weight = _tape_len / 100.0
-	_circle.radius = 16 + wheel.max_weight * wheel.fill_ratio
+	_circle.radius = 16 + wheel.max_weight - 2
 
 	if abs(contact_floor.position.x) > 0 :
 		contact_floor.position.y = 0

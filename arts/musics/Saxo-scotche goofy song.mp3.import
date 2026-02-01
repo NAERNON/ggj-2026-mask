@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bhriy1xavnqf7"
+path="res://.godot/imported/Saxo-scotche goofy song.mp3-d29a33897364bdcaa1a1f26277b67d82.mp3str"
+
+[deps]
+
+source_file="res://arts/musics/Saxo-scotche goofy song.mp3"
+dest_files=["res://.godot/imported/Saxo-scotche goofy song.mp3-d29a33897364bdcaa1a1f26277b67d82.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

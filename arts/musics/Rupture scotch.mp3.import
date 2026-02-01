@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://xp6qno3otn23"
+path="res://.godot/imported/Rupture scotch.mp3-88a85f913aef8d2bfd2bdd723abde1ea.mp3str"
+
+[deps]
+
+source_file="res://arts/musics/Rupture scotch.mp3"
+dest_files=["res://.godot/imported/Rupture scotch.mp3-88a85f913aef8d2bfd2bdd723abde1ea.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

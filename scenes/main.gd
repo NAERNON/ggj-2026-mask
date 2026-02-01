@@ -10,6 +10,11 @@ extends Node2D
 @export var restock   : StaticBody2D
 @export_range(0.0, 1000.0, 10.0) var restock_value : float
 
+@export var main_music : AudioStreamPlayer
+@export var rip_scotch : AudioStreamPlayer
+@export var unroll_scotch : AudioStreamPlayer
+
+
 var _masking_tapes : Array[Line2D]
 
 var _current_tape : Line2D
@@ -127,6 +132,8 @@ func _on_masking_tape_end_grip() -> void:
 	if _current_tape :
 		_masking_tapes.append(_current_tape)
 	_current_tape = null
+	rip_scotch.play(0.22)
+	unroll_scotch.stop()
 
 func _on_masking_tape_start_grip() -> void:
 	_current_tape = Line2D.new()
@@ -140,6 +147,8 @@ func _on_masking_tape_start_grip() -> void:
 	if masking_tape.is_on_wall() or masking_tape.is_on_floor() :
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1) - masking_tape.contact_floor.position * masking_tape.scale
 		add_tape_point(masking_tape.contact_floor.global_position)
+	
+	unroll_scotch.play()
 
 func _on_masking_tape_touch_or_leave_floor() -> void:
 	if _current_tape and not masking_tape._is_rerolling:

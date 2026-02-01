@@ -4,20 +4,21 @@
 [ext_resource type="PackedScene" uid="uid://ba5ixoxqnb3gk" path="res://assets/masking_tape.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cj1mrtn34jdjd" path="res://aseprite/house/background.tres" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://i2k4p6ekqwfd" path="res://aseprite/house/light.png" id="4_jyhfs"]
+[ext_resource type="AudioStream" uid="uid://bhriy1xavnqf7" path="res://arts/musics/Saxo-scotche goofy song.mp3" id="5_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://xp6qno3otn23" path="res://arts/musics/Rupture scotch.mp3" id="6_tefeu"]
+[ext_resource type="AudioStream" uid="uid://cijr6u0a4t0xb" path="res://arts/musics/OBJTape_Ruban adhesif 1 (ID 0297)_LaSonotheque.fr.mp3" id="7_o6xl0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
-size = Vector2(250, 285)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o5qli"]
+size = Vector2(250, 290)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
-size = Vector2(125, 20)
+size = Vector2(126, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
-size = Vector2(20, 125)
+size = Vector2(21, 129.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
-size = Vector2(750, 20)
+size = Vector2(750, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
 size = Vector2(20, 600)
@@ -26,17 +27,17 @@ size = Vector2(20, 600)
 size = Vector2(20, 600)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
-size = Vector2(40, 40)
+size = Vector2(50, 50)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tipki"]
-size = Vector2(40, 40)
+size = Vector2(50, 50)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbgi4"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jyhfs"]
 size = Vector2(20, 20)
 
-[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock")]
+[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "main_music", "rip_scotch", "unroll_scotch")]
 script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
@@ -44,6 +45,9 @@ epsilon_corner = 2.5
 platforms = NodePath("Platforms")
 restock = NodePath("Restock")
 restock_value = 300.0
+main_music = NodePath("MainMusic")
+rip_scotch = NodePath("RipScotch")
+unroll_scotch = NodePath("UnrollScotch")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=323147266]
 light_mask = 3
@@ -51,10 +55,9 @@ texture = ExtResource("2_sugp2")
 offset = Vector2(480, 270)
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
-position = Vector2(77, 510)
+position = Vector2(45, 506)
 collision_layer = 0
 collision_mask = 15
-floor_max_angle = 1.3962634
 floor_snap_length = 5.0
 initial_tape_dist = 600.0
 roll_acceleration = 450.0
@@ -78,65 +81,41 @@ position = Vector2(835, 385)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Library" unique_id=1030156514]
 shape = SubResource("RectangleShape2D_0wfyh")
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Library" unique_id=578743585]
-scale = Vector2(250, 285)
-texture = SubResource("PlaceholderTexture2D_o5qli")
-
 [node name="Shelf1" type="StaticBody2D" parent="Platforms" unique_id=78843935]
 position = Vector2(499, 294)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Shelf1" unique_id=187435732]
-position = Vector2(-0.5, 0)
+position = Vector2(1, -0.5)
 shape = SubResource("RectangleShape2D_o5qli")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Shelf1" unique_id=492160534]
-scale = Vector2(125, 20)
-texture = SubResource("PlaceholderTexture2D_o5qli")
 
 [node name="Shelf2" type="StaticBody2D" parent="Platforms" unique_id=143559546]
 position = Vector2(215, 294)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Shelf2" unique_id=576037438]
-position = Vector2(-0.5, 0)
+position = Vector2(-0.875, -0.75)
 shape = SubResource("RectangleShape2D_o5qli")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Shelf2" unique_id=1239204147]
-scale = Vector2(125, 20)
-texture = SubResource("PlaceholderTexture2D_o5qli")
 
 [node name="Shelf3" type="StaticBody2D" parent="Platforms" unique_id=1514037618]
 position = Vector2(215, 150)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Shelf3" unique_id=470567573]
-position = Vector2(-0.5, 0)
+position = Vector2(-1, -0.5)
 shape = SubResource("RectangleShape2D_o5qli")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Shelf3" unique_id=484388257]
-scale = Vector2(125, 20)
-texture = SubResource("PlaceholderTexture2D_o5qli")
 
 [node name="Shelf4" type="StaticBody2D" parent="Platforms" unique_id=568626965]
 position = Vector2(11, 219)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Shelf4" unique_id=1479471729]
-position = Vector2(-0.5, 0)
+position = Vector2(-0.5, 1.625)
 shape = SubResource("RectangleShape2D_sugp2")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Shelf4" unique_id=1178034037]
-scale = Vector2(20, 125)
-texture = SubResource("PlaceholderTexture2D_o5qli")
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=1731318811]
 position = Vector2(475.00003, 537)
 scale = Vector2(1.5, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1645058030]
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_jyhfs")
-
-[node name="Sprite2D" type="Sprite2D" parent="Ground" unique_id=417878601]
-position = Vector2(-1.5258789e-05, 0)
-scale = Vector2(750, 20)
-texture = SubResource("PlaceholderTexture2D_o5qli")
 
 [node name="WallLeft" type="StaticBody2D" parent="." unique_id=98253075]
 
@@ -151,8 +130,8 @@ position = Vector2(971, 285)
 shape = SubResource("RectangleShape2D_tefeu")
 
 [node name="Box" type="RigidBody2D" parent="." unique_id=962226803]
-position = Vector2(215, 120)
-mass = 0.001
+position = Vector2(215, 113)
+mass = 0.003
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=576251938]
 shape = SubResource("RectangleShape2D_o6xl0")
@@ -169,6 +148,20 @@ shape = SubResource("CircleShape2D_tbgi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Restock" unique_id=1147071703]
 texture = SubResource("PlaceholderTexture2D_jyhfs")
+
+[node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=127968638]
+stream = ExtResource("5_tbgi4")
+autoplay = true
+parameters/looping = true
+
+[node name="RipScotch" type="AudioStreamPlayer" parent="." unique_id=1216850612]
+stream = ExtResource("6_tefeu")
+volume_db = 4.0
+
+[node name="UnrollScotch" type="AudioStreamPlayer" parent="." unique_id=1057637298]
+stream = ExtResource("7_o6xl0")
+volume_db = 3.193
+parameters/looping = true
 
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
