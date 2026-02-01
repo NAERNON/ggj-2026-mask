@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ba5ixoxqnb3gk" path="res://assets/masking_tape.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cj1mrtn34jdjd" path="res://aseprite/house/background.tres" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://i2k4p6ekqwfd" path="res://aseprite/house/light.png" id="4_jyhfs"]
+[ext_resource type="SpriteFrames" uid="uid://cu87v0mvt5ao6" path="res://aseprite/house/refill.tres" id="5_85g3d"]
 [ext_resource type="AudioStream" uid="uid://bhriy1xavnqf7" path="res://arts/musics/Saxo-scotche goofy song.mp3" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://xp6qno3otn23" path="res://arts/musics/Rupture scotch.mp3" id="6_tefeu"]
 [ext_resource type="AudioStream" uid="uid://cijr6u0a4t0xb" path="res://arts/musics/OBJTape_Ruban adhesif 1 (ID 0297)_LaSonotheque.fr.mp3" id="7_o6xl0"]
@@ -40,9 +41,6 @@ size = Vector2(50, 50)
 size = Vector2(50, 50)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbgi4"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jyhfs"]
-size = Vector2(20, 20)
 
 [node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "main_music", "rip_scotch", "unroll_scotch", "pause_menu")]
 script = ExtResource("1_0wfyh")
@@ -157,14 +155,15 @@ shape = SubResource("RectangleShape2D_o6xl0")
 texture = SubResource("PlaceholderTexture2D_tipki")
 
 [node name="Restock" type="StaticBody2D" parent="." unique_id=312312138]
-position = Vector2(11, 146)
+position = Vector2(11, 144)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Restock" unique_id=263989171]
 shape = SubResource("CircleShape2D_tbgi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="Restock" unique_id=1147071703]
-texture = SubResource("PlaceholderTexture2D_jyhfs")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Restock" unique_id=779891710]
+sprite_frames = ExtResource("5_85g3d")
+autoplay = "default"
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=127968638]
 stream = ExtResource("5_tbgi4")

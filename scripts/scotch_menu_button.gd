@@ -20,15 +20,17 @@ func _ready() -> void:
 			_sprite.play("reset_default")
 
 func highlight() -> void:
-	_sprite.modulate = Color(0.7, 0.7, 0.7, 1.0)
+	_sprite.modulate = Color.WHITE
 	match button_type:
 		ButtonType.RESUME:
 			_sprite.play("resume_forward")
 		ButtonType.RESET:
 			_sprite.play("reset_forward")
 
-func unhighlight() -> void:
-	_sprite.modulate = Color.WHITE
+func unhighlight(animated: bool = true) -> void:
+	_sprite.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	
+	if not animated: return
 	match button_type:
 		ButtonType.RESUME:
 			_sprite.play("resume_backward")

@@ -10,6 +10,7 @@ var _current_highlight: ScotchMenuButton.ButtonType
 func _ready() -> void:
 	_current_highlight = ScotchMenuButton.ButtonType.RESUME
 	resume_button.highlight()
+	reset_button.unhighlight(false)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
