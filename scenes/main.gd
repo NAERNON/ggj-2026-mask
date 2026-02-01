@@ -16,6 +16,7 @@ extends Node2D
 
 
 var _masking_tapes : Array[Line2D]
+var _masking_tapes_len : float
 
 var _current_tape : Line2D
 var _nb_current_tape_points : int
@@ -39,6 +40,7 @@ func _ready() -> void :
 		_platform_corners.append(center + Vector2(-size.x, -size.y))
 
 		_current_tape_len = 0.0
+		_masking_tapes_len = 0.0
 
 func _physics_process(_delta : float) -> void :
 	if _current_tape :
@@ -66,10 +68,10 @@ func _physics_process(_delta : float) -> void :
 					p1 = _current_tape.get_point_position(_nb_current_tape_points-2)
 					p2 = _current_tape.get_point_position(_nb_current_tape_points-1)
 		
-			masking_tape.update_used_tape_len(_current_tape_len + p1.distance_to(p2))
+			masking_tape.update_used_tape_len(_current_tape_len + p1.distance_to(p2) + _masking_tapes_len)
 
 		else :
-			masking_tape.update_used_tape_len(0)
+			masking_tape.update_used_tape_len(_masking_tapes_len)	
 
 func get_param_d(p1 : Vector2, p2 : Vector2) -> Vector3 :
 		var param_d : Vector3
@@ -131,6 +133,13 @@ func remove_tape_point() -> void :
 func _on_masking_tape_end_grip() -> void:
 	if _current_tape :
 		_masking_tapes.append(_current_tape)
+		_masking_tapes_len += _current_tape_len
+		if _nb_current_tape_points > 1 :
+			var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
+			var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-1)
+			_masking_tapes_len += p1.distance_to(p2)
+
+	_current_tape_len = 0.0
 	_current_tape = null
 	rip_scotch.play(0.22)
 	unroll_scotch.stop()
@@ -140,6 +149,7 @@ func _on_masking_tape_start_grip() -> void:
 	self.add_child(_current_tape)
 	_current_tape.width = 2.5
 	_nb_current_tape_points = 0
+	_current_tape_len = 0.0
 	masking_tape.reroll_target = Vector2.INF
 
 	add_tape_point(masking_tape.contact_floor.global_position)

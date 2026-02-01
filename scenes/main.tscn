@@ -59,7 +59,7 @@ position = Vector2(45, 506)
 collision_layer = 0
 collision_mask = 15
 floor_snap_length = 5.0
-initial_tape_dist = 600.0
+initial_tape_dist = 750.0
 roll_acceleration = 450.0
 deceleration_scale = 10.0
 jump_speed = 350.0
@@ -131,7 +131,7 @@ shape = SubResource("RectangleShape2D_tefeu")
 
 [node name="Box" type="RigidBody2D" parent="." unique_id=962226803]
 position = Vector2(215, 113)
-mass = 0.003
+mass = 0.005
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=576251938]
 shape = SubResource("RectangleShape2D_o6xl0")
