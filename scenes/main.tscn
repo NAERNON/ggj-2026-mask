@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bhriy1xavnqf7" path="res://arts/musics/Saxo-scotche goofy song.mp3" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://xp6qno3otn23" path="res://arts/musics/Rupture scotch.mp3" id="6_tefeu"]
 [ext_resource type="AudioStream" uid="uid://cijr6u0a4t0xb" path="res://arts/musics/OBJTape_Ruban adhesif 1 (ID 0297)_LaSonotheque.fr.mp3" id="7_o6xl0"]
-[ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://g6q11kun54wl" path="res://scenes/pause_menu.tscn" id="8_tipki"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 size = Vector2(250, 290)
@@ -17,6 +17,12 @@ size = Vector2(126, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 size = Vector2(21, 129.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tipki"]
+size = Vector2(140, 80)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_85g3d"]
+size = Vector2(140, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
 size = Vector2(750, 17)
@@ -57,7 +63,7 @@ texture = ExtResource("2_sugp2")
 offset = Vector2(480, 270)
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
-position = Vector2(45, 506)
+position = Vector2(827, 216)
 collision_layer = 0
 collision_mask = 15
 floor_snap_length = 5.0
@@ -111,6 +117,15 @@ position = Vector2(11, 219)
 position = Vector2(-0.5, 1.625)
 shape = SubResource("RectangleShape2D_sugp2")
 
+[node name="Cadre" type="StaticBody2D" parent="Platforms" unique_id=1031213744]
+position = Vector2(835, 75)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Cadre" unique_id=518452548]
+shape = SubResource("RectangleShape2D_tipki")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Cadre" unique_id=597729165]
+texture = SubResource("PlaceholderTexture2D_85g3d")
+
 [node name="Ground" type="StaticBody2D" parent="." unique_id=1731318811]
 position = Vector2(475.00003, 537)
 scale = Vector2(1.5, 1)
@@ -133,7 +148,7 @@ shape = SubResource("RectangleShape2D_tefeu")
 
 [node name="Box" type="RigidBody2D" parent="." unique_id=962226803]
 position = Vector2(215, 113)
-mass = 0.005
+mass = 0.003
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=576251938]
 shape = SubResource("RectangleShape2D_o6xl0")

@@ -18,7 +18,7 @@ func _input(event: InputEvent) -> void:
 				_highlight(ScotchMenuButton.ButtonType.RESET)
 			ScotchMenuButton.ButtonType.RESET:
 				_highlight(ScotchMenuButton.ButtonType.RESUME)
-	elif event.is_action_pressed("ui_accept"):
+	elif visible and event.is_action_pressed("ui_accept"):
 		button_selected.emit(_current_highlight)
 	elif event.is_action_pressed("ui_cancel"):
 		button_selected.emit(ScotchMenuButton.ButtonType.RESUME)
