@@ -42,6 +42,7 @@ script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
 epsilon_corner = 2.5
+rubber_width = 0.1
 platforms = NodePath("Platforms")
 restock = NodePath("Restock")
 restock_value = 300.0
@@ -139,7 +140,7 @@ shape = SubResource("RectangleShape2D_tefeu")
 
 [node name="Box" type="RigidBody2D" parent="." unique_id=962226803]
 position = Vector2(215, 113)
-mass = 0.003
+mass = 0.002
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=576251938]
 shape = SubResource("RectangleShape2D_o6xl0")
