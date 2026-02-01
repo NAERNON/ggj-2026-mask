@@ -21,4 +21,5 @@ metadata/_custom_type_script = "uid://ctj6g1enoyww8"
 [node name="Reset" type="Node2D" parent="." unique_id=640040723]
 position = Vector2(480, 307)
 script = ExtResource("1_n87rw")
+button_type = 2
 metadata/_custom_type_script = "uid://ctj6g1enoyww8"

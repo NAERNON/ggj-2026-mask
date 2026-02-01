@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cmux78lwg126k" path="res://arts/musics/Menu_saxoscotch_goofy Version final.mp3" id="10_trceg"]
 [ext_resource type="AudioStream" uid="uid://dkpe2slvjhvxj" path="res://arts/musics/Saxo-scotche goofy song Version finale.mp3" id="11_a8y0u"]
 [ext_resource type="SpriteFrames" uid="uid://dnsa1tvpir8c0" path="res://aseprite/house/rolling_round.tres" id="14_a8y0u"]
+[ext_resource type="AudioStream" uid="uid://tnpv0sf8krp" path="res://arts/musics/Goofy_saxoscotch_victory Version finale.mp3" id="15_jkv2x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 size = Vector2(250, 290)
@@ -41,7 +42,7 @@ size = Vector2(52, 52)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbgi4"]
 
-[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "menu_music", "main_music", "rip_scotch", "unroll_scotch", "start_menu", "pause_menu")]
+[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "roll_frame", "paint", "menu_music", "main_music", "rip_scotch", "unroll_scotch", "victory_music", "start_menu", "pause_menu")]
 script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
@@ -49,10 +50,13 @@ epsilon_corner = 2.5
 platforms = NodePath("Platforms")
 restock = NodePath("Restock")
 restock_value = 300.0
+roll_frame = NodePath("RollingAnimated")
+paint = NodePath("BackgroundAnimated")
 menu_music = NodePath("MenuMusic")
 main_music = NodePath("MainMusic")
 rip_scotch = NodePath("RipScotch")
 unroll_scotch = NodePath("UnrollScotch")
+victory_music = NodePath("VictoryMusic")
 start_menu = NodePath("StartMenu")
 pause_menu = NodePath("Menu")
 
@@ -65,10 +69,12 @@ texture = ExtResource("2_sugp2")
 offset = Vector2(480, 270)
 
 [node name="BackgroundAnimated" type="AnimatedSprite2D" parent="." unique_id=1504216153]
+visible = false
 sprite_frames = ExtResource("3_ya4ey")
 offset = Vector2(480, 270)
 
 [node name="RollingAnimated" type="AnimatedSprite2D" parent="." unique_id=655439798]
+visible = false
 position = Vector2(828, 120)
 sprite_frames = ExtResource("14_a8y0u")
 
@@ -197,10 +203,15 @@ stream = ExtResource("7_o6xl0")
 volume_db = 3.193
 parameters/looping = true
 
+[node name="VictoryMusic" type="AudioStreamPlayer" parent="." unique_id=327903614]
+stream = ExtResource("15_jkv2x")
+parameters/looping = true
+
 [connection signal="start_game" from="StartMenu" to="." method="_on_start_menu_start_game"]
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
 [connection signal="start_grip" from="MaskingTape" to="." method="_on_masking_tape_start_grip"]
+[connection signal="touch_frame" from="MaskingTape" to="." method="_on_masking_tape_touch_frame"]
 [connection signal="touch_or_leave_floor" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_floor"]
 [connection signal="touch_or_leave_wall" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_wall"]
 [connection signal="touch_restock" from="MaskingTape" to="." method="_on_masking_tape_touch_restock"]

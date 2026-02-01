@@ -10,13 +10,16 @@ extends Node2D
 @export var restock   : StaticBody2D
 @export_range(0.0, 1000.0, 10.0) var restock_value : float
 
+@export var roll_frame : AnimatedSprite2D
+@export var paint      : AnimatedSprite2D
+
 @export var menu_music    : AudioStreamPlayer
 @export var main_music    : AudioStreamPlayer
 @export var rip_scotch    : AudioStreamPlayer
 @export var unroll_scotch : AudioStreamPlayer
+@export var victory_music : AudioStreamPlayer
 @export var start_menu    : StartMenu
 @export var pause_menu    : PauseMenu
-
 
 var _masking_tapes : Array[Line2D]
 var _masking_tapes_len : float
@@ -27,8 +30,14 @@ var _current_tape_len : float
 
 var _platform_corners : Array[Vector2]
 
+var _victory_timer: Timer = Timer.new()
+
 
 func _ready() -> void :
+	add_child(_victory_timer)
+	_victory_timer.one_shot = true
+	_victory_timer.timeout.connect(_on_victory_timer_timeout)
+	
 	for child_idx : int in platforms.get_child_count() :
 		var platform : StaticBody2D = platforms.get_child(child_idx)
 		var center : Vector2 = platform.position
@@ -218,7 +227,13 @@ func _on_menu_button_selected(type: Variant) -> void:
 
 
 func _on_masking_tape_touch_frame() -> void:
-	pass
+	masking_tape.visible = false
+	masking_tape.process_mode = Node.PROCESS_MODE_DISABLED
+	roll_frame.visible = true
+	roll_frame.play("default")
+	_victory_timer.stop()
+	_victory_timer.wait_time = 2.0
+	_victory_timer.start()
 
 
 func _on_start_menu_start_game() -> void :
@@ -227,3 +242,8 @@ func _on_start_menu_start_game() -> void :
 	main_music.play()
 	masking_tape.process_mode = Node.PROCESS_MODE_INHERIT
 	
+func _on_victory_timer_timeout() -> void :
+	paint.visible = true
+	paint.play("default")
+	main_music.stop()
+	victory_music.play()
