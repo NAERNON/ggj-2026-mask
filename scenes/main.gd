@@ -12,6 +12,7 @@ extends Node2D
 
 @export var roll_frame : AnimatedSprite2D
 @export var paint      : AnimatedSprite2D
+@export var victory_dance : AnimatedSprite2D
 
 @export var menu_music    : AudioStreamPlayer
 @export var main_music    : AudioStreamPlayer
@@ -247,3 +248,8 @@ func _on_start_menu_start_game() -> void :
 func _on_victory_timer_timeout() -> void :
 	paint.visible = true
 	paint.play("default")
+
+func _on_background_animated_animation_finished() -> void:
+	roll_frame.visible = false
+	victory_dance.visible = true
+	victory_dance.play("default")

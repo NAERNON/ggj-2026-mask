@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dy78nvx7md1h5" path="res://scenes/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://ba5ixoxqnb3gk" path="res://assets/masking_tape.tscn" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://j3vg2jq6gkbr" path="res://scenes/start_menu.tscn" id="2_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://c6u1lbginchhk" path="res://scenes/start_menu.tscn" id="2_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://cj1mrtn34jdjd" path="res://aseprite/house/background.tres" id="2_sugp2"]
 [ext_resource type="SpriteFrames" uid="uid://4w6ckhpyo2kk" path="res://aseprite/house/background_painting.tres" id="3_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://i2k4p6ekqwfd" path="res://aseprite/house/light.png" id="4_jyhfs"]
@@ -43,7 +43,7 @@ size = Vector2(52, 52)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbgi4"]
 
-[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "roll_frame", "paint", "menu_music", "main_music", "rip_scotch", "unroll_scotch", "victory_music", "start_menu", "pause_menu")]
+[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "roll_frame", "paint", "victory_dance", "menu_music", "main_music", "rip_scotch", "unroll_scotch", "victory_music", "start_menu", "pause_menu")]
 script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
@@ -53,6 +53,7 @@ restock = NodePath("Restock")
 restock_value = 300.0
 roll_frame = NodePath("RollingAnimated")
 paint = NodePath("BackgroundAnimated")
+victory_dance = NodePath("VictoryDance")
 menu_music = NodePath("MenuMusic")
 main_music = NodePath("MainMusic")
 rip_scotch = NodePath("RipScotch")
@@ -182,6 +183,11 @@ visible = false
 position = Vector2(828, 120)
 sprite_frames = ExtResource("14_a8y0u")
 
+[node name="VictoryDance" type="AnimatedSprite2D" parent="." unique_id=2042562453]
+visible = false
+position = Vector2(838, 177)
+sprite_frames = ExtResource("16_jbj1t")
+
 [node name="Menu" parent="." unique_id=435941927 instance=ExtResource("8_tipki")]
 visible = false
 z_index = 1
@@ -208,10 +214,6 @@ parameters/looping = true
 stream = ExtResource("15_jkv2x")
 parameters/looping = true
 
-[node name="VictoryDance" type="AnimatedSprite2D" parent="." unique_id=2042562453]
-position = Vector2(838, 177)
-sprite_frames = ExtResource("16_jbj1t")
-
 [connection signal="start_game" from="StartMenu" to="." method="_on_start_menu_start_game"]
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
@@ -220,4 +222,5 @@ sprite_frames = ExtResource("16_jbj1t")
 [connection signal="touch_or_leave_floor" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_floor"]
 [connection signal="touch_or_leave_wall" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_wall"]
 [connection signal="touch_restock" from="MaskingTape" to="." method="_on_masking_tape_touch_restock"]
+[connection signal="animation_finished" from="BackgroundAnimated" to="." method="_on_background_animated_animation_finished"]
 [connection signal="button_selected" from="Menu" to="." method="_on_menu_button_selected"]
