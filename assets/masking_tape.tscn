@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ba5ixoxqnb3gk"]
 
 [ext_resource type="Script" uid="uid://cpw72x8irjl4e" path="res://scripts/masking_tape.gd" id="1_no3c2"]
-[ext_resource type="Script" uid="uid://chgbr5uutejwv" path="res://scripts/character_face_sprite.gd" id="2_iih3h"]
-[ext_resource type="Script" uid="uid://dwa6h5uehjmix" path="res://scripts/masking_tape_wheel.gd" id="2_ikd68"]
+[ext_resource type="Script" path="res://scripts/character_face_sprite.gd" id="2_iih3h"]
+[ext_resource type="Script" path="res://scripts/masking_tape_wheel.gd" id="2_ikd68"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_no3c2"]
 radius = 21.0
@@ -19,12 +19,10 @@ contact_floor = NodePath("Node2D")
 shape = SubResource("CircleShape2D_no3c2")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=33840583]
-position = Vector2(293, 391)
+position = Vector2(0, 21)
 
 [node name="MaskingTapeWheel" type="Node2D" parent="." unique_id=907458122]
 script = ExtResource("2_ikd68")
-metadata/_custom_type_script = "uid://dwa6h5uehjmix"
 
 [node name="CharacterFaceSprite" type="Node2D" parent="." unique_id=1412907266]
 script = ExtResource("2_iih3h")
-metadata/_custom_type_script = "uid://chgbr5uutejwv"

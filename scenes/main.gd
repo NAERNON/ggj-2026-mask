@@ -76,32 +76,37 @@ func get_param_d(p1 : Vector2, p2 : Vector2) -> Vector3 :
 		return param_d
 
 func add_tape_point(pos : Vector2, index : int = -1) -> void :
-	_current_tape.add_point(pos, index)
-	_nb_current_tape_points += 1
+	if not masking_tape._is_rerolling :
+		if masking_tape.get_slide_collision_count() > 0 :
+			var t : KinematicCollision2D = masking_tape.get_slide_collision(0)
+			_current_tape.add_point(t.get_position(), index)
+		else :
+			_current_tape.add_point(pos, index)
+		_nb_current_tape_points += 1
 
-	if _nb_current_tape_points > 1 :
-		masking_tape.one_grip_point = true
+		if _nb_current_tape_points > 1 :
+			masking_tape.one_grip_point = true
 
-	if _nb_current_tape_points > 2 :
-		var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
-		var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
-		_current_tape_len += p1.distance_to(p2)
-		var center = (p1 + p2) / 2
-		var angle : float = p1.angle_to_point(p2)
-		var size : float = p1.distance_to(p2)
+		if _nb_current_tape_points > 2 :
+			var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
+			var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
+			_current_tape_len += p1.distance_to(p2)
+			var center = (p1 + p2) / 2
+			var angle : float = p1.angle_to_point(p2)
+			var size : float = p1.distance_to(p2)
 
-		var rectangle : RectangleShape2D = RectangleShape2D.new()
-		rectangle.size = Vector2(size, rubber_width)
+			var rectangle : RectangleShape2D = RectangleShape2D.new()
+			rectangle.size = Vector2(size, rubber_width)
 
-		var collision : CollisionShape2D = CollisionShape2D.new()
-		collision.shape = rectangle
+			var collision : CollisionShape2D = CollisionShape2D.new()
+			collision.shape = rectangle
 
-		var body : StaticBody2D = StaticBody2D.new()
-		body.rotation = angle
-		body.position = center
-		body.add_child(collision)
+			var body : StaticBody2D = StaticBody2D.new()
+			body.rotation = angle
+			body.position = center
+			body.add_child(collision)
 
-		_current_tape.add_child(body)
+			_current_tape.add_child(body)
 
 func remove_tape_point() -> void :
 	if _nb_current_tape_points > 2 :
@@ -133,12 +138,14 @@ func _on_masking_tape_start_grip() -> void:
 	add_tape_point(masking_tape.contact_floor.global_position)
 
 	if masking_tape.is_on_wall() or masking_tape.is_on_floor() :
-		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
+		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1) - masking_tape.contact_floor.position * masking_tape.scale
 		add_tape_point(masking_tape.contact_floor.global_position)
 
 func _on_masking_tape_touch_or_leave_floor() -> void:
-	if _current_tape :
-		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
+	if _current_tape and not masking_tape._is_rerolling:
+		if masking_tape.is_on_floor() :
+			_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
+		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1) - masking_tape.contact_floor.position * masking_tape.scale
 		add_tape_point(masking_tape.contact_floor.global_position)
 
 func _on_masking_tape_reroll() -> void:
@@ -157,8 +164,8 @@ func _on_masking_tape_touch_restock() -> void:
 
 
 func _on_masking_tape_touch_or_leave_wall() -> void:
-	if _current_tape :
-		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
+	if _current_tape and not masking_tape._is_rerolling :
 		if masking_tape.is_on_wall() :
 			_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
+		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1) - masking_tape.contact_floor.position * masking_tape.scale
 		add_tape_point(masking_tape.contact_floor.global_position)

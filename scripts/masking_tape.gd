@@ -6,7 +6,7 @@ class_name MaskingTape extends CharacterBody2D
 @export_range(0.0, 1000.0, 10.0) var jump_speed         : float
 @export_range(0.0, 1000.0, 10.0) var reroll_speed       : float
 @export_range(0.0, 1000.0, 10.0) var wall_roll_speed    : float
-@export_range(0.0, 1000.0, 10.0) var push_force         : float
+@export_range(0.0, 10.0, 1.0) var push_force         : float
 
 @export var contact_floor : Node2D
 var reroll_target     : Vector2
@@ -20,14 +20,11 @@ var _grip_on_wall : bool :
 		floor_stop_on_slope = not floor_stop_on_slope
 		if _grip_on_wall :
 			if get_wall_normal().x == 1 :
-				contact_floor.position.x = -504
-			else :
-				contact_floor.position.x = 504
+				contact_floor.position.x = -21
+			elif get_wall_normal().x == -1 :
+				contact_floor.position.x = 21
 			contact_floor.position.y = 0
 			velocity = Vector2.ZERO
-		else :
-			contact_floor.position.y = 504
-			contact_floor.position.x = 0
 
 		touch_or_leave_wall.emit()
 
@@ -41,6 +38,9 @@ signal touch_restock()
 var _in_free_fall   : bool :
 	set(new_value) :
 		_in_free_fall = new_value
+		if is_on_floor() :
+			contact_floor.position.y = 21
+			contact_floor.position.x = 0
 		touch_or_leave_floor.emit()
 
 var _is_rerolling : bool
@@ -143,9 +143,15 @@ func get_input(delta : float) -> void :
 			velocity.x = move_toward(velocity.x, 0.0, deceleration_scale)
 	else :
 		if right:
-			velocity.x += roll_acceleration * delta
+			if velocity.x < 0 :
+				velocity.x += roll_acceleration * delta * 5
+			else :
+				velocity.x += roll_acceleration * delta
 		if left:
-			velocity.x -= roll_acceleration * delta
+			if velocity.x > 0 :
+				velocity.x -= roll_acceleration * delta * 5
+			else :
+				velocity.x -= roll_acceleration * delta
 	
 	if is_gripping and _used_tape_len >= _tape_len and one_grip_point :
 		velocity.x = 0.0

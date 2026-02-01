@@ -41,7 +41,6 @@ script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
 epsilon_corner = 2.5
-rubber_width = 0.3
 platforms = NodePath("Platforms")
 restock = NodePath("Restock")
 restock_value = 300.0
@@ -55,13 +54,15 @@ offset = Vector2(480, 270)
 position = Vector2(77, 510)
 collision_layer = 0
 collision_mask = 15
-initial_tape_dist = 500.0
+floor_max_angle = 1.3962634
+floor_snap_length = 5.0
+initial_tape_dist = 600.0
 roll_acceleration = 450.0
 deceleration_scale = 10.0
 jump_speed = 350.0
 reroll_speed = 500.0
 wall_roll_speed = 200.0
-push_force = 10.0
+push_force = 5.0
 
 [node name="PlayerLight" type="PointLight2D" parent="MaskingTape" unique_id=86818424]
 range_item_cull_mask = 2
@@ -161,7 +162,7 @@ texture = SubResource("PlaceholderTexture2D_tipki")
 
 [node name="Restock" type="StaticBody2D" parent="." unique_id=312312138]
 position = Vector2(11, 146)
-collision_layer = 3
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Restock" unique_id=263989171]
 shape = SubResource("CircleShape2D_tbgi4")
