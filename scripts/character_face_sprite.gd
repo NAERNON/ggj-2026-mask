@@ -1,6 +1,7 @@
 class_name CharacterFaceSprite extends AnimationGraph
 
 var _sleep_timer: Timer = Timer.new()
+@export var to_sleep : bool = true
 
 enum State {
 	IDLE,
@@ -64,7 +65,7 @@ func transition_after_state(state: int) -> AnimationGraphTransition:
 func set_state(state: int) -> void:
 	super(state)
 	
-	if state == State.IDLE:
+	if state == State.IDLE and to_sleep:
 		_sleep_timer.stop()
 		_sleep_timer.wait_time = 5.0
 		_sleep_timer.start()

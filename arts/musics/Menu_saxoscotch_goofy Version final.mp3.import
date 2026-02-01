@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cmux78lwg126k"
+path="res://.godot/imported/Menu_saxoscotch_goofy Version final.mp3-293477c3237ef8a18f005357ba069a03.mp3str"
+
+[deps]
+
+source_file="res://arts/musics/Menu_saxoscotch_goofy Version final.mp3"
+dest_files=["res://.godot/imported/Menu_saxoscotch_goofy Version final.mp3-293477c3237ef8a18f005357ba069a03.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -10,9 +10,11 @@ extends Node2D
 @export var restock   : StaticBody2D
 @export_range(0.0, 1000.0, 10.0) var restock_value : float
 
+@export var menu_music    : AudioStreamPlayer
 @export var main_music    : AudioStreamPlayer
 @export var rip_scotch    : AudioStreamPlayer
 @export var unroll_scotch : AudioStreamPlayer
+@export var start_menu    : StartMenu
 @export var pause_menu    : PauseMenu
 
 
@@ -42,6 +44,8 @@ func _ready() -> void :
 
 		_current_tape_len = 0.0
 		_masking_tapes_len = 0.0
+		
+		masking_tape.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _physics_process(_delta : float) -> void :
 	if _current_tape :
@@ -202,6 +206,12 @@ func _on_masking_tape_touch_or_leave_wall() -> void:
 func _on_menu_button_selected(type: Variant) -> void:
 	if type == ScotchMenuButton.ButtonType.RESUME :
 		pause_menu.visible = not pause_menu.visible
+		if pause_menu.visible :
+			menu_music.play()
+			main_music.stop()
+		else :
+			menu_music.stop()
+			main_music.play()
 		masking_tape.process_mode = Node.PROCESS_MODE_DISABLED if pause_menu.visible else Node.PROCESS_MODE_INHERIT
 	elif type == ScotchMenuButton.ButtonType.RESET :
 		get_tree().reload_current_scene()
@@ -209,3 +219,11 @@ func _on_menu_button_selected(type: Variant) -> void:
 
 func _on_masking_tape_touch_frame() -> void:
 	pass
+
+
+func _on_start_menu_start_game() -> void :
+	start_menu.visible = false
+	menu_music.stop()
+	main_music.start()
+	masking_tape.process_mode = Node.PROCESS_MODE_INHERIT
+	

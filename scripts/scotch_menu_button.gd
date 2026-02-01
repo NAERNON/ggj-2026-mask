@@ -1,6 +1,7 @@
 class_name ScotchMenuButton extends Node2D
 
 enum ButtonType {
+	START,
 	RESUME,
 	RESET,
 }
@@ -18,6 +19,8 @@ func _ready() -> void:
 			_sprite.play("resume_default")
 		ButtonType.RESET:
 			_sprite.play("reset_default")
+		ButtonType.START:
+			_sprite.play("start_default")
 
 func highlight() -> void:
 	_sprite.modulate = Color.WHITE
@@ -26,6 +29,8 @@ func highlight() -> void:
 			_sprite.play("resume_forward")
 		ButtonType.RESET:
 			_sprite.play("reset_forward")
+		ButtonType.START:
+			_sprite.play("start_forward")
 
 func unhighlight(animated: bool = true) -> void:
 	_sprite.modulate = Color(0.6, 0.6, 0.6, 1.0)

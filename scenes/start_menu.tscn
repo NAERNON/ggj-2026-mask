@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://j3vg2jq6gkbr"]
+
+[ext_resource type="Script" uid="uid://dtsmga5oea1ax" path="res://scenes/start_menu.gd" id="1_thu50"]
+[ext_resource type="Script" uid="uid://ctj6g1enoyww8" path="res://scripts/scotch_menu_button.gd" id="2_m7x51"]
+[ext_resource type="Script" uid="uid://dwa6h5uehjmix" path="res://scripts/masking_tape_wheel.gd" id="3_h61rw"]
+[ext_resource type="Script" uid="uid://chgbr5uutejwv" path="res://scripts/character_face_sprite.gd" id="4_fcv5n"]
+
+[node name="Menu" type="Node2D" unique_id=153115375 node_paths=PackedStringArray("play_button")]
+script = ExtResource("1_thu50")
+play_button = NodePath("Start")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1550184]
+offset_right = 960.0
+offset_bottom = 540.0
+
+[node name="Start" type="Node2D" parent="." unique_id=2076677728]
+position = Vector2(480, 402)
+script = ExtResource("2_m7x51")
+button_type = 0
+metadata/_custom_type_script = "uid://ctj6g1enoyww8"
+
+[node name="Node2D" type="Node2D" parent="." unique_id=279640542]
+position = Vector2(480, 173)
+scale = Vector2(9, 9)
+
+[node name="MaskingTapeWheel" type="Node2D" parent="Node2D" unique_id=1315369542]
+script = ExtResource("3_h61rw")
+
+[node name="CharacterFaceSprite" type="Node2D" parent="Node2D" unique_id=1895046696]
+script = ExtResource("4_fcv5n")
+to_sleep = false
