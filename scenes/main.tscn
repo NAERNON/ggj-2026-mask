@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cj1mrtn34jdjd" path="res://aseprite/house/background.tres" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://i2k4p6ekqwfd" path="res://aseprite/house/light.png" id="4_jyhfs"]
 [ext_resource type="SpriteFrames" uid="uid://cu87v0mvt5ao6" path="res://aseprite/house/refill.tres" id="5_85g3d"]
+[ext_resource type="Texture2D" uid="uid://d3fmtlbgwtw3" path="res://aseprite/house/box.png" id="5_choun"]
 [ext_resource type="AudioStream" uid="uid://bhriy1xavnqf7" path="res://arts/musics/Saxo-scotche goofy song.mp3" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://xp6qno3otn23" path="res://arts/musics/Rupture scotch.mp3" id="6_tefeu"]
 [ext_resource type="AudioStream" uid="uid://cijr6u0a4t0xb" path="res://arts/musics/OBJTape_Ruban adhesif 1 (ID 0297)_LaSonotheque.fr.mp3" id="7_o6xl0"]
@@ -35,10 +36,7 @@ size = Vector2(20, 600)
 size = Vector2(20, 600)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
-size = Vector2(50, 50)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tipki"]
-size = Vector2(50, 50)
+size = Vector2(52, 52)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbgi4"]
 
@@ -153,7 +151,7 @@ mass = 0.003
 shape = SubResource("RectangleShape2D_o6xl0")
 
 [node name="Sprite2D" type="Sprite2D" parent="Box" unique_id=1141377628]
-texture = SubResource("PlaceholderTexture2D_tipki")
+texture = ExtResource("5_choun")
 
 [node name="Restock" type="StaticBody2D" parent="." unique_id=312312138]
 position = Vector2(11, 144)
