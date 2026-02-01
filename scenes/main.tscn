@@ -159,6 +159,10 @@ shape = SubResource("CircleShape2D_tbgi4")
 sprite_frames = ExtResource("5_85g3d")
 autoplay = "default"
 
+[node name="Menu" parent="." unique_id=153115375 instance=ExtResource("8_tipki")]
+visible = false
+z_index = 1
+
 [node name="MainMusic" type="AudioStreamPlayer" parent="." unique_id=127968638]
 stream = ExtResource("5_tbgi4")
 autoplay = true
@@ -172,9 +176,6 @@ volume_db = 4.0
 stream = ExtResource("7_o6xl0")
 volume_db = 3.193
 parameters/looping = true
-
-[node name="Menu" parent="." unique_id=153115375 instance=ExtResource("8_tipki")]
-visible = false
 
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
