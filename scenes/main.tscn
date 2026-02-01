@@ -47,12 +47,12 @@ restock = NodePath("Restock")
 restock_value = 300.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=323147266]
+light_mask = 3
 texture = ExtResource("2_sugp2")
 offset = Vector2(480, 270)
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
 position = Vector2(77, 510)
-scale = Vector2(0.03, 0.03)
 collision_layer = 0
 collision_mask = 15
 initial_tape_dist = 500.0
@@ -62,6 +62,10 @@ jump_speed = 350.0
 reroll_speed = 500.0
 wall_roll_speed = 200.0
 push_force = 10.0
+
+[node name="PlayerLight" type="PointLight2D" parent="MaskingTape" unique_id=86818424]
+range_item_cull_mask = 2
+texture = ExtResource("4_jyhfs")
 
 [node name="MaskingTapes" type="Node" parent="." unique_id=589121195]
 
@@ -155,10 +159,6 @@ shape = SubResource("RectangleShape2D_o6xl0")
 [node name="Sprite2D" type="Sprite2D" parent="Box" unique_id=1141377628]
 texture = SubResource("PlaceholderTexture2D_tipki")
 
-[node name="PlayerLight" type="PointLight2D" parent="." unique_id=86818424]
-position = Vector2(437, 367)
-texture = ExtResource("4_jyhfs")
-
 [node name="Restock" type="StaticBody2D" parent="." unique_id=312312138]
 position = Vector2(11, 146)
 collision_layer = 3
@@ -173,5 +173,3 @@ texture = SubResource("PlaceholderTexture2D_jyhfs")
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
 [connection signal="start_grip" from="MaskingTape" to="." method="_on_masking_tape_start_grip"]
 [connection signal="touch_or_leave_floor" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_floor"]
-[connection signal="touch_or_leave_wall" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_wall"]
-[connection signal="touch_restock" from="MaskingTape" to="." method="_on_masking_tape_touch_restock"]

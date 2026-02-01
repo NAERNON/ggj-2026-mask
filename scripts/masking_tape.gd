@@ -19,24 +19,12 @@ var _grip_on_wall : bool :
 		_grip_on_wall = new_value
 		floor_stop_on_slope = not floor_stop_on_slope
 		if _grip_on_wall :
-			if get_wall_normal().x == 1 :
-				contact_floor.position.x = -504
-			else :
-				contact_floor.position.x = 504
-			contact_floor.position.y = 0
 			velocity = Vector2.ZERO
-		else :
-			contact_floor.position.y = 504
-			contact_floor.position.x = 0
-
-		touch_or_leave_wall.emit()
 
 signal start_grip()
 signal end_grip()
 signal touch_or_leave_floor()
-signal touch_or_leave_wall()
 signal reroll()
-signal touch_restock()
 
 var _in_free_fall   : bool :
 	set(new_value) :
@@ -52,16 +40,15 @@ var is_gripping  : bool :
 			start_grip.emit()
 		else :
 			end_grip.emit()
-			_grip_on_wall  = false
+			_grip_on_wall = false
 			one_grip_point = false
 
 var one_grip_point : bool
 
-var last_floor_position : Vector2
-
 func _ready() -> void :
 	_in_free_fall = not is_on_floor()
 	_is_rerolling = Input.is_action_just_pressed('move_tape_reroll')
+	_grip_on_wall = false
 	_tape_len     = initial_tape_dist
 
 func _physics_process(delta : float) -> void :
@@ -71,31 +58,24 @@ func _physics_process(delta : float) -> void :
 		if not _grip_on_wall :
 			velocity.y += 980 * delta
 
-		if is_on_floor() :
-			last_floor_position = contact_floor.global_position
+			if _in_free_fall and is_on_floor() :
+				_in_free_fall = false
+			elif not is_on_floor() and not _in_free_fall :
+				_in_free_fall = true
+
+			if is_on_wall() and is_gripping :
+				if not _grip_on_wall :
+					_grip_on_wall = true
+		
+		elif _grip_on_wall and not is_on_wall() :
+			_grip_on_wall = false
 
 		move_and_slide()
-		if is_on_wall() and is_gripping :
-			if not _grip_on_wall :
-				_grip_on_wall = true
-
-		elif _grip_on_wall and not is_on_wall() :
-				_grip_on_wall = false
-
-		if _in_free_fall and is_on_floor() :
-			_in_free_fall = false
-		elif not is_on_floor() and not _in_free_fall :
-			_in_free_fall = true
-		
 		for collision_id : int in range(get_slide_collision_count()) :
 			var collision : KinematicCollision2D = get_slide_collision(collision_id)
 			if collision.get_collider() is RigidBody2D :
 				var box : RigidBody2D = collision.get_collider()
 				box.apply_force(collision.get_normal() * -push_force)
-			elif collision.get_collider() is StaticBody2D :
-				var static_body : StaticBody2D = collision.get_collider()
-				if static_body.get_collision_layer_value(2) :
-					touch_restock.emit()
 	else :
 		if reroll_target != Vector2.INF :
 			self.position = self.position.move_toward(reroll_target, reroll_speed*delta)
@@ -112,10 +92,7 @@ func get_input(delta : float) -> void :
 	var grip  = Input.is_action_just_pressed('tape_switch_grip')
 	
 	if grip :
-		if not is_gripping or (is_gripping and (is_on_wall() or is_on_floor())):
-			if is_on_wall() and not _grip_on_wall :
-				_grip_on_wall = true
-			is_gripping = not is_gripping
+		is_gripping = not is_gripping
 
 	if _grip_on_wall :
 		velocity = Vector2.ZERO
@@ -154,6 +131,4 @@ func get_input(delta : float) -> void :
 
 func update_used_tape_len(used_tape : float) -> void :
 	_used_tape_len = used_tape
-
-func add_max_tape(tape_restock : float) -> void :
-	_tape_len += tape_restock
+	print(_used_tape_len)
