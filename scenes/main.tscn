@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dkpe2slvjhvxj" path="res://arts/musics/Saxo-scotche goofy song Version finale.mp3" id="11_a8y0u"]
 [ext_resource type="SpriteFrames" uid="uid://dnsa1tvpir8c0" path="res://aseprite/house/rolling_round.tres" id="14_a8y0u"]
 [ext_resource type="AudioStream" uid="uid://tnpv0sf8krp" path="res://arts/musics/Goofy_saxoscotch_victory Version finale.mp3" id="15_jkv2x"]
+[ext_resource type="SpriteFrames" uid="uid://col1mjgo1anlh" path="res://aseprite/character_face/victory_dance.tres" id="16_jbj1t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 size = Vector2(250, 290)
@@ -206,6 +207,10 @@ parameters/looping = true
 [node name="VictoryMusic" type="AudioStreamPlayer" parent="." unique_id=327903614]
 stream = ExtResource("15_jkv2x")
 parameters/looping = true
+
+[node name="VictoryDance" type="AnimatedSprite2D" parent="." unique_id=2042562453]
+position = Vector2(838, 177)
+sprite_frames = ExtResource("16_jbj1t")
 
 [connection signal="start_game" from="StartMenu" to="." method="_on_start_menu_start_game"]
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
