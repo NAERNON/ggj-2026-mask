@@ -197,3 +197,7 @@ func _on_menu_button_selected(type: Variant) -> void:
 		masking_tape.process_mode = Node.PROCESS_MODE_DISABLED if pause_menu.visible else Node.PROCESS_MODE_INHERIT
 	elif type == ScotchMenuButton.ButtonType.RESET :
 		get_tree().reload_current_scene()
+
+
+func _on_masking_tape_touch_frame() -> void:
+	pass

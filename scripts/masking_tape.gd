@@ -39,6 +39,7 @@ signal touch_or_leave_floor()
 signal touch_or_leave_wall()
 signal reroll()
 signal touch_restock()
+signal touch_frame()
 
 var _in_free_fall   : bool :
 	set(new_value) :
@@ -104,6 +105,8 @@ func _physics_process(delta : float) -> void :
 				var static_body : StaticBody2D = collision.get_collider()
 				if static_body.get_collision_layer_value(2) :
 					touch_restock.emit()
+				elif static_body.get_collision_layer_value(3) :
+					touch_frame.emit()
 	else :
 		if reroll_target != Vector2.INF :
 			self.position = self.position.move_toward(reroll_target, reroll_speed*delta)
