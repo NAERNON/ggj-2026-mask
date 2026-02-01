@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://g6q11kun54wl"]
+
+[ext_resource type="Script" uid="uid://r30beu63gry1" path="res://scenes/pause_menu.gd" id="1_myx47"]
+[ext_resource type="Script" uid="uid://ctj6g1enoyww8" path="res://scripts/scotch_menu_button.gd" id="1_n87rw"]
+
+[node name="Menu" type="Node2D" unique_id=153115375 node_paths=PackedStringArray("resume_button", "reset_button")]
+script = ExtResource("1_myx47")
+resume_button = NodePath("Resume")
+reset_button = NodePath("Reset")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1550184]
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0, 0, 0, 0.80784315)
+
+[node name="Resume" type="Node2D" parent="." unique_id=2076677728]
+position = Vector2(480, 219)
+script = ExtResource("1_n87rw")
+metadata/_custom_type_script = "uid://ctj6g1enoyww8"
+
+[node name="Reset" type="Node2D" parent="." unique_id=640040723]
+position = Vector2(480, 307)
+script = ExtResource("1_n87rw")
+button_type = 1
+metadata/_custom_type_script = "uid://ctj6g1enoyww8"
