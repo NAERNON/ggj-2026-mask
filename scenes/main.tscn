@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bhriy1xavnqf7" path="res://arts/musics/Saxo-scotche goofy song.mp3" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://xp6qno3otn23" path="res://arts/musics/Rupture scotch.mp3" id="6_tefeu"]
 [ext_resource type="AudioStream" uid="uid://cijr6u0a4t0xb" path="res://arts/musics/OBJTape_Ruban adhesif 1 (ID 0297)_LaSonotheque.fr.mp3" id="7_o6xl0"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="8_tipki"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 size = Vector2(250, 290)
@@ -37,7 +38,7 @@ size = Vector2(50, 50)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jyhfs"]
 size = Vector2(20, 20)
 
-[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "main_music", "rip_scotch", "unroll_scotch")]
+[node name="Main" type="Node2D" unique_id=714016782 node_paths=PackedStringArray("masking_tape", "platforms", "restock", "main_music", "rip_scotch", "unroll_scotch", "pause_menu")]
 script = ExtResource("1_0wfyh")
 masking_tape = NodePath("MaskingTape")
 epsilon_tape = 1.0
@@ -48,6 +49,7 @@ restock_value = 300.0
 main_music = NodePath("MainMusic")
 rip_scotch = NodePath("RipScotch")
 unroll_scotch = NodePath("UnrollScotch")
+pause_menu = NodePath("Menu")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=323147266]
 light_mask = 3
@@ -163,9 +165,13 @@ stream = ExtResource("7_o6xl0")
 volume_db = 3.193
 parameters/looping = true
 
+[node name="Menu" parent="." unique_id=153115375 instance=ExtResource("8_tipki")]
+visible = false
+
 [connection signal="end_grip" from="MaskingTape" to="." method="_on_masking_tape_end_grip"]
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
 [connection signal="start_grip" from="MaskingTape" to="." method="_on_masking_tape_start_grip"]
 [connection signal="touch_or_leave_floor" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_floor"]
 [connection signal="touch_or_leave_wall" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_wall"]
 [connection signal="touch_restock" from="MaskingTape" to="." method="_on_masking_tape_touch_restock"]
+[connection signal="button_selected" from="Menu" to="." method="_on_menu_button_selected"]

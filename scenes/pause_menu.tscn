@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://g6q11kun54wl"]
 
-[ext_resource type="Script" uid="uid://r30beu63gry1" path="res://scenes/pause_menu.gd" id="1_myx47"]
+[ext_resource type="Script" path="res://scenes/pause_menu.gd" id="1_myx47"]
 [ext_resource type="Script" uid="uid://ctj6g1enoyww8" path="res://scripts/scotch_menu_button.gd" id="1_n87rw"]
 
 [node name="Menu" type="Node2D" unique_id=153115375 node_paths=PackedStringArray("resume_button", "reset_button")]

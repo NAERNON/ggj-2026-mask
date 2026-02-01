@@ -10,9 +10,10 @@ extends Node2D
 @export var restock   : StaticBody2D
 @export_range(0.0, 1000.0, 10.0) var restock_value : float
 
-@export var main_music : AudioStreamPlayer
-@export var rip_scotch : AudioStreamPlayer
+@export var main_music    : AudioStreamPlayer
+@export var rip_scotch    : AudioStreamPlayer
 @export var unroll_scotch : AudioStreamPlayer
+@export var pause_menu    : PauseMenu
 
 
 var _masking_tapes : Array[Line2D]
@@ -188,3 +189,11 @@ func _on_masking_tape_touch_or_leave_wall() -> void:
 			_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1) - masking_tape.contact_floor.position * masking_tape.scale
 		add_tape_point(masking_tape.contact_floor.global_position)
+
+
+func _on_menu_button_selected(type: Variant) -> void:
+	if type == ScotchMenuButton.ButtonType.RESUME :
+		pause_menu.visible = not pause_menu.visible
+		masking_tape.process_mode = Node.PROCESS_MODE_DISABLED if pause_menu.visible else Node.PROCESS_MODE_INHERIT
+	elif type == ScotchMenuButton.ButtonType.RESET :
+		get_tree().reload_current_scene()
