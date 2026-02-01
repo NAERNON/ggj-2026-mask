@@ -173,4 +173,5 @@ texture = SubResource("PlaceholderTexture2D_jyhfs")
 [connection signal="reroll" from="MaskingTape" to="." method="_on_masking_tape_reroll"]
 [connection signal="start_grip" from="MaskingTape" to="." method="_on_masking_tape_start_grip"]
 [connection signal="touch_or_leave_floor" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_floor"]
+[connection signal="touch_or_leave_wall" from="MaskingTape" to="." method="_on_masking_tape_touch_or_leave_wall"]
 [connection signal="touch_restock" from="MaskingTape" to="." method="_on_masking_tape_touch_restock"]

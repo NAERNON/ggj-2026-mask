@@ -139,7 +139,7 @@ func _on_masking_tape_start_grip() -> void:
 func _on_masking_tape_touch_or_leave_floor() -> void:
 	if _current_tape :
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
-		add_tape_point(masking_tape.contact_floor.global_position if masking_tape.is_on_floor() else masking_tape.last_floor_position)
+		add_tape_point(masking_tape.contact_floor.global_position)
 
 func _on_masking_tape_reroll() -> void:
 	if masking_tape.position.distance_to(masking_tape.reroll_target) < epsilon_tape :
@@ -154,3 +154,11 @@ func _on_masking_tape_reroll() -> void:
 func _on_masking_tape_touch_restock() -> void:
 	self.remove_child(restock)
 	masking_tape.add_max_tape(restock_value)
+
+
+func _on_masking_tape_touch_or_leave_wall() -> void:
+	if _current_tape :
+		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1)
+		if masking_tape.is_on_wall() :
+			_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
+		add_tape_point(masking_tape.contact_floor.global_position)

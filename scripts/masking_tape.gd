@@ -19,11 +19,22 @@ var _grip_on_wall : bool :
 		_grip_on_wall = new_value
 		floor_stop_on_slope = not floor_stop_on_slope
 		if _grip_on_wall :
+			if get_wall_normal().x == 1 :
+				contact_floor.position.x = -504
+			else :
+				contact_floor.position.x = 504
+			contact_floor.position.y = 0
 			velocity = Vector2.ZERO
+		else :
+			contact_floor.position.y = 504
+			contact_floor.position.x = 0
+
+		touch_or_leave_wall.emit()
 
 signal start_grip()
 signal end_grip()
 signal touch_or_leave_floor()
+signal touch_or_leave_wall()
 signal reroll()
 signal touch_restock()
 
@@ -41,7 +52,7 @@ var is_gripping  : bool :
 			start_grip.emit()
 		else :
 			end_grip.emit()
-			_grip_on_wall = false
+			_grip_on_wall  = false
 			one_grip_point = false
 
 var one_grip_point : bool
@@ -51,7 +62,6 @@ var last_floor_position : Vector2
 func _ready() -> void :
 	_in_free_fall = not is_on_floor()
 	_is_rerolling = Input.is_action_just_pressed('move_tape_reroll')
-	_grip_on_wall = false
 	_tape_len     = initial_tape_dist
 
 func _physics_process(delta : float) -> void :
@@ -61,24 +71,16 @@ func _physics_process(delta : float) -> void :
 		if not _grip_on_wall :
 			velocity.y += 980 * delta
 
-			if is_on_wall() and is_gripping :
-				if not _grip_on_wall :
-					_grip_on_wall = true
-					if get_wall_normal().x == 1 :
-						contact_floor.position.x = -contact_floor.position.y
-					else :
-						contact_floor.position.x = contact_floor.position.y
-					contact_floor.position.y = 0
-		
-		elif _grip_on_wall and not is_on_wall() :
-			_grip_on_wall = false
-			contact_floor.position.y = abs(contact_floor.position.x)
-			contact_floor.position.x = 0
-
 		if is_on_floor() :
 			last_floor_position = contact_floor.global_position
 
 		move_and_slide()
+		if is_on_wall() and is_gripping :
+			if not _grip_on_wall :
+				_grip_on_wall = true
+
+		elif _grip_on_wall and not is_on_wall() :
+				_grip_on_wall = false
 
 		if _in_free_fall and is_on_floor() :
 			_in_free_fall = false
@@ -111,6 +113,8 @@ func get_input(delta : float) -> void :
 	
 	if grip :
 		if not is_gripping or (is_gripping and (is_on_wall() or is_on_floor())):
+			if is_on_wall() and not _grip_on_wall :
+				_grip_on_wall = true
 			is_gripping = not is_gripping
 
 	if _grip_on_wall :
