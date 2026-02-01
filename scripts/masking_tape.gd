@@ -8,9 +8,12 @@ class_name MaskingTape extends CharacterBody2D
 @export_range(0.0, 1000.0, 10.0) var wall_roll_speed    : float
 @export_range(0.0, 10.0, 1.0) var push_force         : float
 
+@export var collision     : CollisionShape2D
 @export var contact_floor : Node2D
 @export var face_sprite   : CharacterFaceSprite
+@export var wheel         : MaskingTapeWheel
 
+var _circle : CircleShape2D
 var reroll_target     : Vector2
 
 var _tape_len      : float
@@ -22,9 +25,9 @@ var _grip_on_wall : bool :
 		floor_stop_on_slope = not floor_stop_on_slope
 		if _grip_on_wall :
 			if get_wall_normal().x == 1 :
-				contact_floor.position.x = -21
+				contact_floor.position.x = -_circle.radius
 			elif get_wall_normal().x == -1 :
-				contact_floor.position.x = 21
+				contact_floor.position.x = _circle.radius
 			contact_floor.position.y = 0
 			velocity = Vector2.ZERO
 
@@ -65,6 +68,9 @@ func _ready() -> void :
 	_in_free_fall = not is_on_floor()
 	_is_rerolling = Input.is_action_just_pressed('move_tape_reroll')
 	_tape_len     = initial_tape_dist
+	wheel.max_weight = _tape_len / 100.0
+	_circle = collision.shape
+	_circle.radius = 16 + wheel.max_weight
 
 func _physics_process(delta : float) -> void :
 	get_input(delta)
@@ -177,6 +183,23 @@ func get_input(delta : float) -> void :
 
 func update_used_tape_len(used_tape : float) -> void :
 	_used_tape_len = used_tape
+	wheel.fill_ratio = 1.0 - (_used_tape_len / _tape_len)
+	_circle.radius = 16 + wheel.max_weight * wheel.fill_ratio
+	if abs(contact_floor.position.x) > 0 :
+		contact_floor.position.y = 0
+		contact_floor.position.x = sign(contact_floor.position.x) * _circle.radius
+	else :
+		contact_floor.position.y = _circle.radius
+		contact_floor.position.x = 0
 
 func add_max_tape(tape_restock : float) -> void :
 	_tape_len += tape_restock
+	wheel.max_weight = _tape_len / 100.0
+	_circle.radius = 16 + wheel.max_weight * wheel.fill_ratio
+
+	if abs(contact_floor.position.x) > 0 :
+		contact_floor.position.y = 0
+		contact_floor.position.x = sign(contact_floor.position.x) * _circle.radius
+	else :
+		contact_floor.position.y = _circle.radius
+		contact_floor.position.x = 0
