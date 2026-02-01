@@ -147,6 +147,7 @@ func _on_masking_tape_end_grip() -> void:
 
 func _on_masking_tape_start_grip() -> void:
 	_current_tape = Line2D.new()
+	_current_tape.default_color = Color.from_string("ffeca2", Color.WHITE)
 	self.add_child(_current_tape)
 	_current_tape.width = 2.5
 	_nb_current_tape_points = 0
