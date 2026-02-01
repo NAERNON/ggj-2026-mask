@@ -234,6 +234,8 @@ func _on_masking_tape_touch_frame() -> void:
 	_victory_timer.stop()
 	_victory_timer.wait_time = 2.0
 	_victory_timer.start()
+	main_music.stop()
+	victory_music.play()
 
 
 func _on_start_menu_start_game() -> void :
@@ -245,5 +247,3 @@ func _on_start_menu_start_game() -> void :
 func _on_victory_timer_timeout() -> void :
 	paint.visible = true
 	paint.play("default")
-	main_music.stop()
-	victory_music.play()

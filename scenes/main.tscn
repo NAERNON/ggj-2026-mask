@@ -68,16 +68,6 @@ light_mask = 3
 texture = ExtResource("2_sugp2")
 offset = Vector2(480, 270)
 
-[node name="BackgroundAnimated" type="AnimatedSprite2D" parent="." unique_id=1504216153]
-visible = false
-sprite_frames = ExtResource("3_ya4ey")
-offset = Vector2(480, 270)
-
-[node name="RollingAnimated" type="AnimatedSprite2D" parent="." unique_id=655439798]
-visible = false
-position = Vector2(828, 120)
-sprite_frames = ExtResource("14_a8y0u")
-
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
 position = Vector2(76, 505)
 collision_layer = 0
@@ -160,6 +150,11 @@ shape = SubResource("RectangleShape2D_tbgi4")
 position = Vector2(971, 285)
 shape = SubResource("RectangleShape2D_tefeu")
 
+[node name="BackgroundAnimated" type="AnimatedSprite2D" parent="." unique_id=1504216153]
+visible = false
+sprite_frames = ExtResource("3_ya4ey")
+offset = Vector2(480, 270)
+
 [node name="Box" type="RigidBody2D" parent="." unique_id=962226803]
 position = Vector2(215, 113)
 mass = 0.002
@@ -180,6 +175,11 @@ shape = SubResource("CircleShape2D_tbgi4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Restock" unique_id=779891710]
 sprite_frames = ExtResource("5_85g3d")
 autoplay = "default"
+
+[node name="RollingAnimated" type="AnimatedSprite2D" parent="." unique_id=655439798]
+visible = false
+position = Vector2(828, 120)
+sprite_frames = ExtResource("14_a8y0u")
 
 [node name="Menu" parent="." unique_id=435941927 instance=ExtResource("8_tipki")]
 visible = false
