@@ -9,6 +9,8 @@ class_name MaskingTape extends CharacterBody2D
 @export_range(0.0, 10.0, 1.0) var push_force         : float
 
 @export var contact_floor : Node2D
+@export var face_sprite   : CharacterFaceSprite
+
 var reroll_target     : Vector2
 
 var _tape_len      : float
@@ -100,6 +102,21 @@ func _physics_process(delta : float) -> void :
 		if reroll_target != Vector2.INF :
 			self.position = self.position.move_toward(reroll_target, reroll_speed*delta)
 			reroll.emit()
+	
+	if velocity == Vector2.ZERO :
+		if face_sprite.get_state() > CharacterFaceSprite.State.SLEEP_002 :
+			face_sprite.set_state(CharacterFaceSprite.State.IDLE)
+	else :
+		if velocity.x > 0 :
+			if velocity.x < 300 :
+				face_sprite.set_state(CharacterFaceSprite.State.RUN_SLOW_RIGHT)
+			else :
+				face_sprite.set_state(CharacterFaceSprite.State.RUN_FAST_RIGHT)
+		else :
+			if velocity.x > -300 :
+				face_sprite.set_state(CharacterFaceSprite.State.RUN_SLOW_LEFT)
+			else :
+				face_sprite.set_state(CharacterFaceSprite.State.RUN_FAST_LEFT)
 
 func get_input(delta : float) -> void :
 	_is_rerolling = Input.is_action_pressed('move_tape_reroll') and is_gripping

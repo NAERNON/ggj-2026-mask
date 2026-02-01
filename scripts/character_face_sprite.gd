@@ -68,3 +68,6 @@ func set_state(state: int) -> void:
 		_sleep_timer.stop()
 		_sleep_timer.wait_time = 5.0
 		_sleep_timer.start()
+
+func get_state() -> int :
+	return _state
