@@ -57,7 +57,7 @@ texture = ExtResource("2_sugp2")
 offset = Vector2(480, 270)
 
 [node name="MaskingTape" parent="." unique_id=311947507 instance=ExtResource("1_o5qli")]
-position = Vector2(827, 216)
+position = Vector2(76, 505)
 collision_layer = 0
 collision_mask = 15
 floor_snap_length = 5.0
