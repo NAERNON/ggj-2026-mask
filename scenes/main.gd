@@ -194,8 +194,7 @@ func _on_masking_tape_touch_restock() -> void:
 
 func _on_masking_tape_touch_or_leave_wall() -> void:
 	if _current_tape and not masking_tape._is_rerolling :
-		if masking_tape.is_on_wall() :
-			_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
+		_current_tape.set_point_position(_nb_current_tape_points-1, masking_tape.contact_floor.global_position)
 		masking_tape.reroll_target = _current_tape.get_point_position(_nb_current_tape_points-1) - masking_tape.contact_floor.position * masking_tape.scale
 		add_tape_point(masking_tape.contact_floor.global_position)
 
