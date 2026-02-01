@@ -95,6 +95,10 @@ func add_tape_point(pos : Vector2, index : int = -1) -> void :
 		if _nb_current_tape_points > 1 :
 			masking_tape.one_grip_point = true
 
+		if _current_tape.get_child_count(false) > 0 :
+			var foo : StaticBody2D = _current_tape.get_child(-1)
+			foo.set_collision_layer_value(1, true)
+
 		if _nb_current_tape_points > 2 :
 			var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-3)
 			var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
@@ -114,6 +118,7 @@ func add_tape_point(pos : Vector2, index : int = -1) -> void :
 			body.position = center
 			body.add_child(collision)
 
+			body.set_collision_layer_value(1, false)
 			_current_tape.add_child(body)
 
 func remove_tape_point() -> void :
@@ -139,6 +144,9 @@ func _on_masking_tape_end_grip() -> void:
 			var p1 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-2)
 			var p2 : Vector2 = _current_tape.get_point_position(_nb_current_tape_points-1)
 			_masking_tapes_len += p1.distance_to(p2)
+		if _current_tape.get_child_count(false) > 0 :
+			var foo : StaticBody2D = _current_tape.get_child(-1)
+			foo.set_collision_layer_value(1, true)
 
 	_current_tape_len = 0.0
 	_current_tape = null
